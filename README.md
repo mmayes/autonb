@@ -2,7 +2,7 @@
 Automated way to do NAVBLUE schedule runs
 
 
-###Fresh install of python3 and selenium on High Sierra
+### Fresh install of python3 and selenium on High Sierra
 1. Follow instructions at https://docs.python-guide.org/starting/install3/osx/
 2. Download and install command line tools from Apple Developer https://developer.apple.com/download/more/
 3. Install Homebrew with command given in the python installation guide
@@ -21,7 +21,7 @@ Automated way to do NAVBLUE schedule runs
 10. Install drivers to interface with the different browsers
 	1. Can do manually via https://selenium-python.readthedocs.io/installation.html
 	2. Chrome - https://sites.google.com/a/chromium.org/chromedriver/downloads
-	3. or this [page](https://www.kenst.com/2015/03/installing-chromedriver-on-mac-osx/) mentions
+	3. or [this page](https://www.kenst.com/2015/03/installing-chromedriver-on-mac-osx/) mentions
 		1. `brew install --cask chromedriver`
 11. Install some sort of IDE. CodeRunner via the appstore. Can download PyCharm community edition from their website or use homebrew.
 	1. `brew install --cask pycharm-ce`
@@ -31,8 +31,8 @@ Automated way to do NAVBLUE schedule runs
 	3. Might be able to specify interpreter and packages from system when you create a project
 
 
-###Keep homebrew up to date
-#####From https://docs.brew.sh/FAQ
+### Keep homebrew up to date
+##### From https://docs.brew.sh/FAQ
 To update homebrew:
 `brew update`
 
