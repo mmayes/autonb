@@ -143,11 +143,11 @@ def basicRun(prefix, suffix,\
   time.sleep(timeBetween)
   a[10].send_keys(Keys.BACKSPACE)
   time.sleep(timeBetween)
-  if (norm_threshold_minute > 40):
+  if (normal_threshold_minute > 40):
     a[10].send_keys("45")
-  elif (norm_threshold_minute > 25):
+  elif (normal_threshold_minute > 25):
     a[10].send_keys("30")
-  elif (norm_hreshold_minute > 10):
+  elif (normal_hreshold_minute > 10):
     a[10].send_keys("15")
   else:
     a[10].send_keys("00")
