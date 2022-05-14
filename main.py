@@ -107,14 +107,22 @@ elif baselineTest == "FO" or baselineTest == "All":
     basicRun("TEST_ridiculouslyhigh", date_time, ten_mil, "EWR", "FO", 85, 100, 90, 85, 100, 90, 85, 100, 90, browser, testMode, verbose, 16)
 else:
     for base in baseList:
-        #for minFloor in range(65, 76, 1):  # set the floor of the min window
-        for minFloor in range(80, 83, 1):  # set the floor of the min window
-            for maxFloor in range(85, 86, 1):  # set the floor of the max window
-                for normalFloor in range(80, 85, 1):  # set the floor of the normal window
-                    for thresholdDelta in range(5, 8, 1): # set how much higher the threshold is over the floor
-                        if minFloor <= normalFloor: #NAVBLUE won't let the min floor be greater than the normal floor
-                            if normalFloor <= maxFloor: #NAVBLUE won't let the normal floor be greater than the max floor
-                                basicRun("", date_time, ten_mil, base, seat, minFloor, minFloor + 15, minFloor + thresholdDelta, normalFloor, normalFloor + 15, normalFloor + thresholdDelta, maxFloor, maxFloor + 15,maxFloor + thresholdDelta, browser, testMode, verbose, runcount)
+        #set the constants for fixed windows
+        minFloor = 65
+        minCeiling = 80
+        normalFloor = 70
+        normalCeiling = 85
+        maxFloor = 75
+        maxCeiling = 90
+        for minThresholdHour in range(minFloor, minCeiling, 3): #incrememnt the threshold hour between the floor and ceiling
+            for minThresholdMinute in range(0, 60, 60): #set the minute portion of the threshold. If set to (0, 60, 60) it will just do whole hours. If set to (0, 60, 30) then it will be 30 min increments.
+                for maxThresholdHour in range(maxFloor, maxCeiling, 3): #incrememnt the threshold hour between the floor and ceiling
+                    for maxThresholdMinute in range(0, 60, 60): #set the minute portion of the threshold. If set to (0, 60, 60) it will just do whole hours. If set to (0, 60, 30) then it will be 30 min increments.
+                        for normThresholdHour in range(normalFloor, normalCeiling): #incrememnt the threshold hour between the floor and ceiling
+                            for normThresholdMinute in range(0, 60, 30): #set the minute portion of the threshold. If set to (0, 60, 60) it will just do whole hours. If set to (0, 60, 30) then it will be 30 min increments.
+                                    if minFloor <= normalFloor: #NAVBLUE won't let the min floor be greater than the normal floor
+                                        if normalFloor <= maxFloor: #NAVBLUE won't let the normal floor be greater than the max floor
+                                            basicRun("", date_time, ten_mil, base, seat, minFloor, minCeiling, minThreshold, normalFloor, normalCeiling, normalThreshold, maxFloor, maxCeiling,maxThreshold, browser, testMode, verbose, runcount)
                             else:
                                 print("skipping run " + str(runcount) + " because normal floor is greater than max floor")
                         else:
