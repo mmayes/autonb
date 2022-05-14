@@ -147,7 +147,7 @@ def basicRun(prefix, suffix,\
     a[10].send_keys("45")
   elif (normal_threshold_minute > 25):
     a[10].send_keys("30")
-  elif (normal_hreshold_minute > 10):
+  elif (normal_threshold_minute > 10):
     a[10].send_keys("15")
   else:
     a[10].send_keys("00")
