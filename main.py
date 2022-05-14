@@ -1,5 +1,6 @@
 import time
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from basicRun import *
 from complexRun import *
 from browserSetup import *
@@ -127,8 +128,8 @@ else:
                                                 # we don't want the min threshold to ever be greater than normal threshold. They can be equal though.
                                                 if ((minThresholdHour < normalThresholdHour) or ((minThresholdHour == normalThresholdHour) and (minThresholdMinute <= normalThresholdMinute))):
                                                     basicRun("", date_time, ten_mil, base, seat, minFloor, minCeiling, minThresholdHour, minThresholdMinute, normalFloor, normalCeiling, normalThresholdHour, normalThreshholdMinute, maxFloor, maxCeiling, maxThresholdHour, maxThresholdMinute, browser, testMode, verbose, runcount)
-                                                    else:
-                                                        print("skipping run " + str(runcount) + " because min threshold is greater than normal threshold")
+                                                else:
+                                                    print("skipping run " + str(runcount) + " because min threshold is greater than normal threshold")
                                             else:
                                                 print("skipping run " + str(runcount) + " because normal threshold is greater than max threshold")
                                         else:
