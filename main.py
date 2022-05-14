@@ -1,9 +1,7 @@
-import time
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from seleniumSetup import *
+from browserSetup import *
 from basicRun import *
 from complexRun import *
-from browserSetup import *
 
 # set the seat to either 'CA' or 'FO'
 seat = 'CA'
@@ -61,12 +59,9 @@ verbose = False
 # time between keypresses (0.25 is a known good number)
 timeBetween = 0.025
 
-browser = webdriver.Chrome()
-#browser = webdriver.Safari()
-#browser.maximize_window()
-
-time.sleep(5) #wait for the javascript to load
+browser = seleniumSetup()
 browserSetup(browser, productionServer)
+time.sleep(5) #wait for the javascript to load
 
 runcount = 1
 now = datetime.now()  # current date and time
