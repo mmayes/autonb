@@ -126,8 +126,8 @@ else:
                                             # we don't want the normal threshold to ever be greater than max threshold. They can be equal though.
                                             if ((normThresholdHour < maxThresholdHour) or ((normThresholdHour == maxThresholdHour) and (normThresholdMinute <= maxThresholdMinute))):
                                                 # we don't want the min threshold to ever be greater than normal threshold. They can be equal though.
-                                                if ((minThresholdHour < normalThresholdHour) or ((minThresholdHour == normalThresholdHour) and (minThresholdMinute <= normalThresholdMinute))):
-                                                    basicRun("", date_time, ten_mil, base, seat, minFloor, minCeiling, minThresholdHour, minThresholdMinute, normalFloor, normalCeiling, normalThresholdHour, normalThreshholdMinute, maxFloor, maxCeiling, maxThresholdHour, maxThresholdMinute, browser, testMode, verbose, runcount)
+                                                if ((minThresholdHour < normalThresholdHour) or ((minThresholdHour == normalThresholdHour) and (minThresholdMinute <= normThresholdMinute))):
+                                                    basicRun("", date_time, ten_mil, base, seat, minFloor, minCeiling, minThresholdHour, minThresholdMinute, normFloor, normCeiling, normThresholdHour, normThreshholdMinute, maxFloor, maxCeiling, maxThresholdHour, maxThresholdMinute, browser, testMode, verbose, runcount)
                                                 else:
                                                     print("skipping run " + str(runcount) + " because min threshold is greater than normal threshold")
                                             else:
