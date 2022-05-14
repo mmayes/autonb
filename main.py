@@ -16,9 +16,15 @@ baseList = ['IAH']
 # set to 0 if number of min credit bidders will not be restricted
 maxMinCredit = 0
 
+# add a prefix to the run
+# this can be useful if you want to label runs with "test"
+# if it's empty between the quotes then nothing will be added
+prefix = "test"
+
 # add a suffix to the end of the name of the run
 # this is useful if you already did a set of runs so this will be added to the end to make it unique
 # if it's empty between the quotes then nothing will be added
+# not really necessary since timestamps are included
 suffix = ""
 
 # set the max stack height for unstacking on line holders
@@ -122,7 +128,7 @@ else:
                                             if ((normalThresholdHour < maxThresholdHour) or ((normalThresholdHour == maxThresholdHour) and (normalThresholdMinute <= maxThresholdMinute))):
                                                 # we don't want the min threshold to ever be greater than normal threshold. They can be equal though.
                                                 if ((minThresholdHour < normalThresholdHour) or ((minThresholdHour == normalThresholdHour) and (minThresholdMinute <= normalThresholdMinute))):
-                                                    basicRun("", date_time, ten_mil, base, seat, minFloor, minCeiling, minThresholdHour, minThresholdMinute, normalFloor, normalCeiling, normalThresholdHour, normalThresholdMinute, maxFloor, maxCeiling, maxThresholdHour, maxThresholdMinute, browser, testMode, verbose, runcount)
+                                                    basicRun(prefix, date_time, ten_mil, base, seat, minFloor, minCeiling, minThresholdHour, minThresholdMinute, normalFloor, normalCeiling, normalThresholdHour, normalThresholdMinute, maxFloor, maxCeiling, maxThresholdHour, maxThresholdMinute, browser, testMode, verbose, runcount)
                                                 else:
                                                     print("skipping run " + str(runcount) + " because min threshold is greater than normal threshold")
                                             else:
