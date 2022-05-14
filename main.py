@@ -115,18 +115,26 @@ else:
         maxFloor = 75
         maxCeiling = 90
         for minThresholdHour in range(minFloor, minCeiling, 3): #incrememnt the threshold hour between the floor and ceiling
-            for minThresholdMinute in range(0, 60, 60): #set the minute portion of the threshold. If set to (0, 60, 60) it will just do whole hours. If set to (0, 60, 30) then it will be 30 min increments.
+            for minThresholdMinute in range(0, 60, 60): #set the minute portion of the threshold. If set to (0, 60, 60) it will just do whole hours. If set to (0, 60, 30) then it will be 30 min increments. Can go as low as 15 minute increments.
                 for maxThresholdHour in range(maxFloor, maxCeiling, 3): #incrememnt the threshold hour between the floor and ceiling
-                    for maxThresholdMinute in range(0, 60, 60): #set the minute portion of the threshold. If set to (0, 60, 60) it will just do whole hours. If set to (0, 60, 30) then it will be 30 min increments.
+                    for maxThresholdMinute in range(0, 60, 60): #set the minute portion of the threshold. If set to (0, 60, 60) it will just do whole hours. If set to (0, 60, 30) then it will be 30 min increments. Can go as low as 15 minute increments.
                         for normThresholdHour in range(normalFloor, normalCeiling): #incrememnt the threshold hour between the floor and ceiling
-                            for normThresholdMinute in range(0, 60, 30): #set the minute portion of the threshold. If set to (0, 60, 60) it will just do whole hours. If set to (0, 60, 30) then it will be 30 min increments.
+                            for normThresholdMinute in range(0, 60, 30): #set the minute portion of the threshold. If set to (0, 60, 60) it will just do whole hours. If set to (0, 60, 30) then it will be 30 min increments. Can go as low as 15 minute increments.
                                     if minFloor <= normalFloor: #NAVBLUE won't let the min floor be greater than the normal floor
                                         if normalFloor <= maxFloor: #NAVBLUE won't let the normal floor be greater than the max floor
-                                            basicRun("", date_time, ten_mil, base, seat, minFloor, minCeiling, minThreshold, normalFloor, normalCeiling, normalThreshold, maxFloor, maxCeiling,maxThreshold, browser, testMode, verbose, runcount)
-                            else:
-                                print("skipping run " + str(runcount) + " because normal floor is greater than max floor")
-                        else:
-                            print("skipping run " + str(runcount) + " because min floor is greater than normal floor")
+                                            # we don't want the normal threshold to ever be greater than max threshold. They can be equal though.
+                                            if ((normThresholdHour < maxThresholdHour) or ((normThresholdHour == maxThresholdHour) and (normThresholdMinute <= maxThresholdMinute))):
+                                                # we don't want the min threshold to ever be greater than normal threshold. They can be equal though.
+                                                if ((minThresholdHour < normalThresholdHour) or ((minThresholdHour == normalThresholdHour) and (minThresholdMinute <= normalThresholdMinute))):
+                                                    basicRun("", date_time, ten_mil, base, seat, minFloor, minCeiling, minThresholdHour, minThresholdMinute, normalFloor, normalCeiling, normalThresholdHour, normalThreshholdMinute, maxFloor, maxCeiling, maxThresholdHour, maxThresholdMinute, browser, testMode, verbose, runcount)
+                                                    else:
+                                                        print("skipping run " + str(runcount) + " because min threshold is greater than normal threshold")
+                                            else:
+                                                print("skipping run " + str(runcount) + " because normal threshold is greater than max threshold")
+                                        else:
+                                            print("skipping run " + str(runcount) + " because normal floor is greater than max floor")
+                                    else:
+                                        print("skipping run " + str(runcount) + " because min floor is greater than normal floor")
                         runcount = runcount + 1
                     # we don't want the normal threshold to ever be greater than max threshold. They can be equal though.
                     # if ((normThresholdHour < maxThresholdHour) or ((normThresholdHour == maxThresholdHour) and (normThresholdMinute <= maxThresholdMinute))):

@@ -12,15 +12,14 @@ timeBetween = .025
 
 def basicRun(prefix, suffix,\
              maxIterations, base, seat,\
-             min_floor, min_ceiling, min_threshold,\
-             normal_floor, normal_ceiling, normal_threshold,\
-             max_floor, max_ceiling, max_threshold,\
+             min_floor, min_ceiling, min_threshold_hour, min_threshold_minute,\
+             normal_floor, normal_ceiling, normal_threshold_hour, normal_threshold_minute,\
+             max_floor, max_ceiling, max_threshold_hour, max_threshold_minute,\
              browser, testMode, verbose, runNumber):
   if prefix == "":
-    runName = base + "-" + seat + "_" + str(min_floor) + "-" + str(min_ceiling) + "-" + str(min_threshold) + "__" + str(normal_floor) + "-" + str(normal_ceiling) + "-" + str(normal_threshold) + "__" + str(max_floor) + "-" + str(max_ceiling) + "-" + str(max_threshold) + "_" + suffix
+    runName = base + "-" + seat + "_" + str(min_floor) + "-" + str(min_ceiling) + "-" + str(min_threshold_hour) + str(min_threshold_minute).zfill(2) + "__" + str(normal_floor) + "-" + str(normal_ceiling) + "-" + str(normal_threshold_hour) + str(normal_threshold_minute).zfill(2) + "__" + str(max_floor) + "-" + str(max_ceiling) + "-" + str(max_threshold_hour) + str(max_threshold_minute).zfill(2) + "_" + suffix
   else:
-    runName = prefix + "_" + base + "-" + seat + "_" + str(min_floor) + "-" + str(min_ceiling) + "-" + str(min_threshold) + "__" + str(normal_floor) + "-" + str(normal_ceiling) + "-" + str(normal_threshold) + "__" + str(max_floor) + "-" + str(max_ceiling) + "-" + str(max_threshold) + "_" + suffix
-  print("starting run " + str(runNumber) + ": " + runName)
+    runName = prefix + "_" + base + "-" + seat + "_" + str(min_floor) + "-" + str(min_ceiling) + "-" + str(min_threshold_hour) + str(min_threshold_minute).zfill(2) + "__" + str(normal_floor) + "-" + str(normal_ceiling) + "-" + str(normal_threshold_hour) + str(normal_threshold_minute).zfill(2) + "__" + str(max_floor) + "-" + str(max_ceiling) + "-" + str(max_threshold_hour) + str(max_threshold_minute).zfill(2) + "_" + suffix
 
   element = WebDriverWait(browser, 60).until(
     EC.visibility_of_element_located((By.XPATH, "//*[@value='Launch Run']"))
@@ -94,9 +93,22 @@ def basicRun(prefix, suffix,\
   time.sleep(timeBetween)
   a[21].send_keys(Keys.BACKSPACE)
   time.sleep(timeBetween)
-  a[21].send_keys(max_threshold)
+  a[21].send_keys(max_threshold_hour)
   time.sleep(timeBetween)
-  a[21].send_keys(Keys.TAB)
+  a[22].send_keys(Keys.BACKSPACE)
+  time.sleep(timeBetween)
+  a[22].send_keys(Keys.BACKSPACE)
+  time.sleep(timeBetween)
+  if (max_threshold_minute > 40):
+    a[22].send_keys("45")
+  elif (max_threshold_minute > 25):
+    a[22].send_keys("30")
+  elif (max_threshold_minute > 10):
+    a[22].send_keys("15")
+  else:
+    a[22].send_keys("00")
+  time.sleep(timeBetween)
+  a[22].send_keys(Keys.TAB)
 
   #####################################
   ## Normal credit window
@@ -125,9 +137,22 @@ def basicRun(prefix, suffix,\
   time.sleep(timeBetween)
   a[9].send_keys(Keys.BACKSPACE)
   time.sleep(timeBetween)
-  a[9].send_keys(normal_threshold)
+  a[9].send_keys(normal_threshold_hour)
   time.sleep(timeBetween)
-  a[9].send_keys(Keys.TAB)
+  a[10].send_keys(Keys.BACKSPACE)
+  time.sleep(timeBetween)
+  a[10].send_keys(Keys.BACKSPACE)
+  time.sleep(timeBetween)
+  if (norm_threshold_minute > 40):
+    a[10].send_keys("45")
+  elif (norm_threshold_minute > 25):
+    a[10].send_keys("30")
+  elif (norm_hreshold_minute > 10):
+    a[10].send_keys("15")
+  else:
+    a[10].send_keys("00")
+  time.sleep(timeBetween)
+  a[10].send_keys(Keys.TAB)
 
   #####################################
   ## Min credit window
@@ -156,9 +181,22 @@ def basicRun(prefix, suffix,\
   time.sleep(timeBetween)
   a[15].send_keys(Keys.BACKSPACE)
   time.sleep(timeBetween)
-  a[15].send_keys(min_threshold)
+  a[15].send_keys(min_threshold_hour)
   time.sleep(timeBetween)
-  a[15].send_keys(Keys.TAB)
+  a[16].send_keys(Keys.BACKSPACE)
+  time.sleep(timeBetween)
+  a[16].send_keys(Keys.BACKSPACE)
+  time.sleep(timeBetween)
+  if (min_threshold_minute > 40):
+    a[16].send_keys("45")
+  elif (min_threshold_minute > 25):
+    a[16].send_keys("30")
+  elif (min_hreshold_minute > 10):
+    a[16].send_keys("15")
+  else:
+    a[16].send_keys("00")
+  time.sleep(timeBetween)
+  a[16].send_keys(Keys.TAB)
 
   # a[23].send_keys(Keys.BACKSPACE + Keys.BACKSPACE + Keys.BACKSPACE + Keys.BACKSPACE)
   # time.sleep(timeBetween)
