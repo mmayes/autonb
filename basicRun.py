@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import UnexpectedAlertPresentException
 
 from config import *
 from run_logger import log_run_to_file
@@ -236,16 +237,27 @@ def basicRun(prefix, suffix, maxMinCredit,\
       "Mixed Lines Window": f"Low={mixed_low}, High={mixed_high}, Threshold={mixed_threshold}",
   }
 
-  if testMode:
-    cancelButton = browser.find_element("xpath", "//*[@value='Cancel']")
-    cancelButton.click()
-    log('Canceled ' + runName)
-    log_run_to_file(runName, "Basic Run", "Canceled (Test Mode)", settings_dict)
-    time.sleep(timeBetween)
-  else:
-    log('Submitting ' + runName)
-    log('')
-    saveButton = browser.find_element("xpath", "//*[@value='Save']")
-    saveButton.click()
-    log_run_to_file(runName, "Basic Run", "Submitted", settings_dict)
-    time.sleep(timeBetween)
+  try:
+    if testMode:
+      cancelButton = browser.find_element("xpath", "//*[@value='Cancel']")
+      cancelButton.click()
+      log('Canceled ' + runName)
+      log_run_to_file(runName, "Basic Run", "Canceled (Test Mode)", settings_dict)
+      time.sleep(timeBetween)
+    else:
+      log('Submitting ' + runName)
+      log('')
+      saveButton = browser.find_element("xpath", "//*[@value='Save']")
+      saveButton.click()
+      log_run_to_file(runName, "Basic Run", "Submitted", settings_dict)
+      time.sleep(timeBetween)
+  except UnexpectedAlertPresentException as e:
+      alert_text = e.alert_text or "Unknown Alert"
+      log(f"Alert occurred: {alert_text}")
+      try:
+          alert = browser.switch_to.alert
+          alert.accept()
+      except Exception:
+          pass
+      log_run_to_file(runName, "Basic Run", f"Failed: {alert_text}", settings_dict)
+      raise e

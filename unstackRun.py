@@ -7,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 
 from config import *
 from run_logger import log_run_to_file
+from selenium.common.exceptions import UnexpectedAlertPresentException
 
 # time between keypresses (0.25 is a known good number)
 timeBetween = .025
@@ -312,16 +313,27 @@ def unstackRun(prefix, suffix, maxMinCredit, \
         "Day Settings": day_settings
     }
 
-    if testMode:
-        cancelButton = browser.find_element("xpath", "//*[@value='Cancel']")
-        cancelButton.click()
-        log('Canceled ' + runName)
-        log_run_to_file(runName, "Unstack Run", "Canceled (Test Mode)", settings_dict)
-        time.sleep(timeBetween)
-    else:
-        log('Submitting ' + runName)
-        log('')
-        saveButton = browser.find_element("xpath", "//*[@value='Save']")
-        saveButton.click()
-        log_run_to_file(runName, "Unstack Run", "Submitted", settings_dict)
-        time.sleep(timeBetween)
+    try:
+        if testMode:
+            cancelButton = browser.find_element("xpath", "//*[@value='Cancel']")
+            cancelButton.click()
+            log('Canceled ' + runName)
+            log_run_to_file(runName, "Unstack Run", "Canceled (Test Mode)", settings_dict)
+            time.sleep(timeBetween)
+        else:
+            log('Submitting ' + runName)
+            log('')
+            saveButton = browser.find_element("xpath", "//*[@value='Save']")
+            saveButton.click()
+            log_run_to_file(runName, "Unstack Run", "Submitted", settings_dict)
+            time.sleep(timeBetween)
+    except UnexpectedAlertPresentException as e:
+        alert_text = e.alert_text or "Unknown Alert"
+        log(f"Alert occurred: {alert_text}")
+        try:
+            alert = browser.switch_to.alert
+            alert.accept()
+        except Exception:
+            pass
+        log_run_to_file(runName, "Unstack Run", f"Failed: {alert_text}", settings_dict)
+        raise e
