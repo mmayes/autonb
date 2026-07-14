@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
 from config import *
+from run_logger import log_run_to_file
 
 # time between keypresses (0.25 is a known good number)
 timeBetween = .025
@@ -222,14 +223,29 @@ def basicRun(prefix, suffix, maxMinCredit,\
   ####################################
   ## Cancel or save
   #####################################
+  settings_dict = {
+      "Base": base,
+      "Seat": seat,
+      "Max Iterations": maxIterations,
+      "Max Min Credit": maxMinCredit,
+      "Max Mixed Lines": maxMixedLines,
+      "Normal Credit Window": f"Floor={normal_floor}, Ceiling={normal_ceiling}, Threshold={normal_threshold_hour:02d}:{normal_threshold_minute:02d}",
+      "Min Credit Window": f"Floor={min_floor}, Ceiling={min_ceiling}, Threshold={min_threshold_hour:02d}:{min_threshold_minute:02d}",
+      "Max Credit Window": f"Floor={max_floor}, Ceiling={max_ceiling}, Threshold={max_threshold_hour:02d}:{max_threshold_minute:02d}",
+      "Split Credit Window": f"Floor={split_low}, Ceiling={split_high}, Threshold={split_threshold}",
+      "Mixed Lines Window": f"Low={mixed_low}, High={mixed_high}, Threshold={mixed_threshold}",
+  }
+
   if testMode:
     cancelButton = browser.find_element("xpath", "//*[@value='Cancel']")
     cancelButton.click()
     log('Canceled ' + runName)
+    log_run_to_file(runName, "Basic Run", "Canceled (Test Mode)", settings_dict)
     time.sleep(timeBetween)
   else:
     log('Submitting ' + runName)
     log('')
     saveButton = browser.find_element("xpath", "//*[@value='Save']")
     saveButton.click()
+    log_run_to_file(runName, "Basic Run", "Submitted", settings_dict)
     time.sleep(timeBetween)
