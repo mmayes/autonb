@@ -6,5 +6,5 @@ echo Installing dependencies...
 python -m pip install --upgrade -r requirements.txt
 
 echo Starting AutoNB...
-python -m streamlit run app.py
+python app.py
 pause

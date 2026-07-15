@@ -18,4 +18,4 @@ pip install -r requirements.txt
 
 # Run the app
 echo "Starting AutoNB..."
-streamlit run app.py
+python app.py

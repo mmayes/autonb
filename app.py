@@ -1,4 +1,26 @@
 import streamlit as st
+import sys
+import socket
+
+# Programmatic Streamlit launcher that finds a free port to prevent conflict
+if __name__ == "__main__":
+    if not st.runtime.exists():
+        import streamlit.web.cli as stcli
+        
+        def find_free_port(start_port=8501):
+            port = start_port
+            while True:
+                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                    try:
+                        s.bind(('0.0.0.0', port))
+                        return port
+                    except socket.error:
+                        port += 1
+                        
+        port = find_free_port(8501)
+        sys.argv = ["streamlit", "run", sys.argv[0], "--server.port", str(port)]
+        sys.exit(stcli.main())
+
 import time
 import os
 from datetime import datetime, date
