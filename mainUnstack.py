@@ -1,6 +1,7 @@
 from seleniumSetup import *
 from browserSetup import *
 from basicRun import *
+from unstackRun import *
 from complexRun import *
 from testRun import *
 from config import *
@@ -36,14 +37,15 @@ else:
                                                 if ((minThresholdHour < normalThresholdHour) or (
                                                         (minThresholdHour == normalThresholdHour) and (
                                                         minThresholdMinute <= normalThresholdMinute))):
-                                                    basicRun(prefix, suffix, maxMinCredit, maxIterations, base, seat,
+                                                    unstackRun(prefix, suffix, maxMinCredit, maxIterations, base, seat,
                                                              minFloor, minCeiling, minThresholdHour, minThresholdMinute,
                                                              normalFloor, normalCeiling, normalThresholdHour,
                                                              normalThresholdMinute, maxFloor, maxCeiling,
                                                              maxThresholdHour, maxThresholdMinute, split_low,
-                                                             split_high, split_threshold, maxMixedLines, mixed_low,
-                                                             mixed_high, mixed_threshold, browser, testMode, verbose,
-                                                             runcount)
+                                                             split_high, split_threshold, maxMixedLines,
+                                                             unstackLineHolders, maxPasses, pointOrDayStack, mixed_low,
+                                                             mixed_high, mixed_threshold, {}, browser, testMode,
+                                                             verbose, runcount)
                                                     runcount = runcount + 1
                                                 else:
                                                     print("skipping run " + str(

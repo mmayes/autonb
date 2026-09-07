@@ -1,52 +1,86 @@
-# autonb
-Automated way to do NAVBLUE schedule runs
+# 🛫 AutoNB: Automated Navblue PBS Runs
+AutoNB is a Python-based automation tool designed to simplify and streamline the process of running Navblue PBS schedule runs, customized for C5's version of Navblue PBS.
+
+## 🖥️ Installation & Setup
+
+### Prerequisites
+**Google Chrome** must be installed on your system. Download from [google.com/chrome](https://www.google.com/chrome/)
+- The app uses Selenium to automate Chrome
+- ChromeDriver is automatically managed, but Chrome itself must be installed manually
+
+### 1. Install Python
+**MacOS**
+- **Option A (Recommended):** Install via Homebrew: `brew install python`
+- **Option B:** Download the installer from [python.org](https://www.python.org/downloads/macos/)
+
+**Windows**
+- **Option A (Recommended):** Install via Chocolatey: `choco install python`
+  - If you don't have Chocolatey, install it from [chocolatey.org](https://chocolatey.org/install)
+- **Option B:** Download the installer from [python.org](https://www.python.org/downloads/windows/)
+  - **IMPORTANT:** Check the box **"Add Python to PATH"** during installation.
+
+### 2. Credentials Setup (Required)
+Create a file named `userInfo.py` in the project root directory. This file should contain your NavBlue credentials:
+
+```python
+username = 'YourUsername'
+password = 'YourPassword'
+```
+
+**Note:** `userInfo.py` is included in `.gitignore` and will never be tracked by Git to keep your credentials secure. If you leave `userInfo.py` empty or don't create it, the Streamlit UI will prompt you for credentials. However, **CLI mode requires this file to be present and populated.**
+
+## 🚀 Running the Application
+
+### Option 1: Streamlit UI (Recommended)
+The easiest way to use AutoNB is via the web interface.
+
+**MacOS / Linux**
+1. Open Terminal.
+2. Navigate to the project folder.
+3. Run: `./run_app.sh`
+
+**Windows**
+1. Open the project folder.
+2. Double-click `run_app.bat`.
+
+This will automatically install dependencies and launch the browser-based UI where you can configure and run your automation.
+
+**Troubleshooting (Windows)**
+If you see an error like `'python' or 'pip' is not recognized`:
+- Ensure Python is installed.
+- Re-run the Python installer and select **"Modify"**, then ensure **"Add Python to environment variables"** is checked.
+- Or, manually add the Python installation path to your system's PATH.
+
+### Option 2: Manual CLI Mode
+For advanced users who prefer the command line or want to run headless scripts.
+
+1. Edit `config.py` to set your desired run parameters (Base, Seat, Thresholds, etc.).
+2. Ensure `userInfo.py` is set up with your credentials.
+3. Run the script:
+   - For **Basic Runs**: `python3 main.py`
+   - For **Unstack Runs**: `python3 mainUnstack.py`
+
+### config.py
+Most of the settings for CLI mode are contained in `config.py`. See the inline documentation in that file for usage of all variables. Note that the UI overrides these settings when running in Streamlit mode.
+
+## 📁 Project Structure
+| File      | Purpose                                                                                                 |
+|-----------|----------------------------------------------------------------------------------------------------------|
+| **app.py** | **Main Streamlit UI application - run this to use the web interface** |
+| **run_app.sh** | Helper script to install dependencies and launch the app (Mac/Linux) |
+| **run_app.bat** | Helper script to install dependencies and launch the app (Windows) |
+| main.py   | Legacy CLI entry point for executing schedule runs |
+| mainUnstack.py | Legacy CLI entry point for unstack runs |
+| config.py | Default configuration settings (can be overridden in the UI) |
+| userInfo.py | NavBlue PBS credentials (username/password) |
+| basicRun.py | Handles the basic PBS run scenarios |
+| unstackRun.py | Handles unstack PBS run scenarios |
+| run_logic.py | Logic for generating run parameters |
+| browserSetup.py | Selenium browser setup and login |
+| seleniumSetup.py | ChromeDriver setup using webdriver-manager |
+| requirements.txt | Python dependencies | 
 
 
-### Fresh install of python3 and selenium on High Sierra
-1. Follow instructions at https://docs.python-guide.org/starting/install3/osx/
-2. Download and install command line tools from Apple Developer https://developer.apple.com/download/more/
-3. Install Homebrew with command given in the python installation guide
-4. Create the .profile file in your home directory and then open it in textedit
-	1. `touch ~/.profile`
-	2. `open -e ~/.profile`
-5. The .profile file should be empty so add this line to it:
-	1. `export PATH="/usr/local/opt/python/libexec/bin:$PATH"`
-6. Then install python as instructed in the installation guide
-7. Check to see what version of python was installed and that it runs properly
-	1. `python --version`
-8. Then install selenium using pip:
-	1. `pip install selenium`
-9. You can check to see what version of selenium was installed by:
-	1. `pip freeze`
-10. Install drivers to interface with the different browsers
-	1. Can do manually via https://selenium-python.readthedocs.io/installation.html
-	2. Chrome - https://sites.google.com/a/chromium.org/chromedriver/downloads
-	3. or [this page](https://www.kenst.com/2015/03/installing-chromedriver-on-mac-osx/) mentions
-		1. `brew install --cask chromedriver`
-11. Install some sort of IDE. CodeRunner via the appstore. Can download PyCharm community edition from their website or use homebrew.
-	1. `brew install --cask pycharm-ce`
-12. If using PyCharm, need to add selenium to the project
-	1. Go to PyCharm->Preferences->Project XXXXX->Project Interpreter
-	2. Then click the + and it will install selenium
-	3. Might be able to specify interpreter and packages from system when you create a project
+## 📄 License
 
-
-### Keep homebrew up to date
-##### From https://docs.brew.sh/FAQ
-To update homebrew:
-`brew update`
-
-To find out what is out of date:
-`brew outdated`
-
-Upgrade everything with:
-`brew upgrade`
-
-To list the versions of installed casks:
-`brew cask list --versions`
-
-As of December 2017, you can also keep Brew Cask up to date ([per Stack Overflow](https://stackoverflow.com/questions/31968664/upgrade-all-the-casks-installed-via-homebrew-cask))
-`brew cask upgrade`
-
-However this will not update casks that do not have versioning information (version :latest) or applications that have a built-in upgrade mechanism (auto_updates true). To reinstall these casks (and consequently upgrade them if upgrades are available), run the upgrade command with the --greedy flag like this:
-`brew cask upgrade --greedy`
+Distributed under the BSD-3-Clause License — free to use and modify with attribution.

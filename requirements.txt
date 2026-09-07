@@ -1,0 +1,4 @@
+selenium
+streamlit
+webdriver-manager
+python-dateutil
